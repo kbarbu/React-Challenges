@@ -1,0 +1,1 @@
+Add CSS styling so that the list of courses looks more like the attached photo. Each row should fill the available screen width. Cards on the same row should appear uniform in height and internal spacing.

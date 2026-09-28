@@ -11,3 +11,130 @@
     }
   }
 }
+
+:root {
+  --blue: #528fd8;
+  --blue-ink: #2a5aa0;
+  --blue-light: #82aee3;
+  --red: #fe646f;
+  --red-ink: #b3232f;
+  --green: #a2e62e;
+  --green-ink: #487309;
+  --yellow: #ffe177;
+  --yellow-ink: #866400;
+  --lavender: #dedbee;
+  --paper: #f9f7f8;
+  --ink: #2a2533;
+  --muted: #665c65;
+  --navy: #24406e;
+}
+ 
+body {
+  min-height: 100vh;
+  background: linear-gradient(180deg, #e6e3f3 0, var(--paper) 300px) no-repeat,
+    var(--paper);
+}
+ 
+main {
+  padding: 8px 16px 32px;
+  font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+}
+ 
+main h1 {
+  margin-block: 0.5em 0.8em;
+  font-size: 2.1rem;
+  font-weight: 750;
+  letter-spacing: -0.02em;
+  color: var(--navy);
+}
+ 
+.course-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+ 
+.course-card {
+  flex: 1 1 220px;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  padding: 20px;
+  background: #ffffff;
+  border: 1px solid #ebe8f2;
+  border-radius: 16px;
+  box-shadow: 0 1px 2px rgba(60, 50, 90, 0.06),
+    0 8px 20px -12px rgba(60, 50, 90, 0.18);
+  color: var(--ink);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  --accent: var(--blue);
+  --accent-ink: var(--blue-ink);
+}
+ 
+.course-card[data-term='fall'] {
+  --accent: var(--red);
+  --accent-ink: var(--red-ink);
+}
+.course-card[data-term='winter'] {
+  --accent: var(--blue);
+  --accent-ink: var(--blue-ink);
+}
+.course-card[data-term='spring'] {
+  --accent: var(--green);
+  --accent-ink: var(--green-ink);
+}
+.course-card[data-term='summer'] {
+  --accent: var(--yellow);
+  --accent-ink: var(--yellow-ink);
+}
+ 
+.course-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 2px 4px rgba(60, 50, 90, 0.08),
+    0 16px 28px -14px rgba(60, 50, 90, 0.28);
+}
+ 
+.course-card::before {
+  content: '';
+  width: 44px;
+  height: 8px;
+  margin-bottom: 16px;
+  border-radius: 999px;
+  background: var(--accent);
+}
+ 
+.course-card h2 {
+  margin: 0 0 10px;
+  font-size: 1.35rem;
+  font-weight: 650;
+  letter-spacing: -0.01em;
+}
+ 
+.course-card p {
+  margin: 0 0 20px;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: var(--muted);
+}
+ 
+.course-card .meets {
+  margin-top: auto;
+  align-self: flex-start;
+  padding: 6px 12px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--accent) 16%, white);
+  color: var(--accent-ink);
+  font-size: 0.85rem;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+ 
+@media (prefers-reduced-motion: reduce) {
+  .course-card {
+    transition: none;
+  }
+  .course-card:hover {
+    transform: none;
+  }
+}
+
