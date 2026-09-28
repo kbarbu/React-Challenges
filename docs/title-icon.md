@@ -1,0 +1,1 @@
+Change the title of my index.html to CS Course Scheduler and add an appropriate favicon.
