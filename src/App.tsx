@@ -1,4 +1,5 @@
 import './App.css';
+import TermPage from './utilities/TermPage';
 import { useJsonQuery } from './utilities/fetch';
 
 const DATA_URL = 'https://courses.cs.northwestern.edu/394/guides/data/cs-courses-firestore.php';
@@ -31,24 +32,7 @@ const App = () => {
 
     if (!schedule) return <h1>Schedule {SCHEDULE_ID} not found</h1>;
 
-    return (
-        <main>
-            <h1>{schedule.title}</h1>
-            <ul className="course-list">
-            {Object.entries(schedule.courses).map(([code, course]) => (
-                <li
-                key={code}
-                className="course-card"
-                data-term={course.term.toLowerCase()}
-                >
-                <h2>{course.term} CS {course.number}</h2>
-                <p>{course.title}</p>
-                <div className="meets">{course.meets}</div>
-                </li>
-            ))}
-            </ul>
-        </main>
-    );
+    return <TermPage schedule={schedule} />;
 };
 
 export default App;

@@ -1,0 +1,1 @@
+Add a filter to filter on the term of the class, Fall, Winter, or Spring. It should immediately update the set of classes displayed and it should initially be set to Fall. If a file doesn't exist and you need that, then create it.
