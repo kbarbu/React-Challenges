@@ -1,25 +1,10 @@
 import './App.css';
 import TermPage from './utilities/TermPage';
 import { useJsonQuery } from './utilities/fetch';
+import type { ScheduleData } from './utilities/types';
 
 const DATA_URL = 'https://courses.cs.northwestern.edu/394/guides/data/cs-courses-firestore.php';
 const SCHEDULE_ID = 'CS-2018-2019';
-
-interface Course {
-    term: string;
-    number: string;
-    meets: string;
-    title: string;
-}
-
-interface Schedule {
-    title: string;
-    courses: Record<string, Course>;
-}
-
-interface ScheduleData {
-    schedules: Record<string, Schedule>;
-}
 
 const App = () => {
     const [json, isLoading, error] = useJsonQuery(DATA_URL);

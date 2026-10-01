@@ -1,24 +1,29 @@
-interface Course {
-    term: string;
-    number: string;
-    meets: string;
-    title: string;
-}
+import { colorForIndex } from './colors';
+import CourseCard from './CourseCard';
+import type { Courses } from './types';
 
 interface CourseListProps {
-    courses: Record<string, Course>;
+    courses: Courses;
     selectedTerm: string;
+    selectedCourses: string[];
+    toggleSelected: (code: string) => void;
 }
 
-const CourseList = ({ courses, selectedTerm }: CourseListProps) => (
+const CourseList = ({ courses, selectedTerm, selectedCourses, toggleSelected }: CourseListProps) => (
     <ul className="course-list">
-        {Object.entries(courses).filter(([, course]) => course.term === selectedTerm).map(([code, course]) => (
-                <li key={code} className="course-card" data-term={course.term.toLowerCase()}>
-                    <h2>{course.term} CS {course.number}</h2>
-                    <p>{course.title}</p>
-                    <div className="meets">{course.meets}</div>
-                </li>
-            ))}
+        {Object.entries(courses)
+            .filter(([, course]) => course.term === selectedTerm)
+            .map(([code, course]) => {
+                const index = selectedCourses.indexOf(code);
+                return (
+                    <CourseCard
+                        key={code}
+                        course={course}
+                        color={index === -1 ? undefined : colorForIndex(index)}
+                        onToggle={() => toggleSelected(code)}
+                    />
+                );
+            })}
     </ul>
 );
 

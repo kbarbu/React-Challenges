@@ -1,0 +1,1 @@
+Change the UI so clicking a course card adds it to a list of selected courses, and clicking a selected card unselects it. Selected cards should be clearly highlighted with a light-blue border 2-3px thick. Users can select and unselect any number of courses.
