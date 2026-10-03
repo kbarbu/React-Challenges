@@ -1,0 +1,1 @@
+When I click a class that is on the calendar, I want a modal to open showing the class name, the meeting time, and headings for the professor, room number, course website, prerequisites, and other requirements. I don't have data for the professor, room, website, prerequisites, or other requirements yet, so those should just appear as headings.

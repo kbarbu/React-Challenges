@@ -30,6 +30,15 @@ export const parseMeeting = (meets: string): MeetingSlot[] => {
     }));
 };
 
+const DAY_NAMES = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri'];
+
+export const describeMeeting = (meets: string) => {
+    const slots = parseMeeting(meets);
+    if (slots.length === 0) return meets;
+    const days = slots.map(slot => DAY_NAMES[slot.dayOffset]).join(', ');
+    return `${days} · ${formatTimeRange(slots[0].start, slots[0].end)}`;
+};
+
 export const formatTimeRange = (start: string, end: string) => {
     const from = to12Hour(start);
     const to = to12Hour(end);

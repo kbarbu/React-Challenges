@@ -22,5 +22,6 @@ export const buildEvents = (courses: Courses, selectedCodes: string[]) =>
             start: `${WEEK_DATES[slot.dayOffset]}T${slot.start}:00`,
             end: `${WEEK_DATES[slot.dayOffset]}T${slot.end}:00`,
             backColor: colorForIndex(index),
+            tags: { code },
         }));
     });
