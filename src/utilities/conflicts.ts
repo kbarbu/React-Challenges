@@ -1,10 +1,6 @@
 import { parseMeeting } from './meetings';
 
-interface Slot {
-    dayOffset: number;
-    start: number;
-    end: number;
-}
+type Slot = ReturnType<typeof parseMeeting>[number];
 
 interface HasTermAndMeets {
     term: string;
@@ -16,8 +12,8 @@ const timesOverlap = (a: Slot, b: Slot): boolean => a.start < b.end && b.start <
 const slotsConflict = (a: Slot, b: Slot): boolean => a.dayOffset === b.dayOffset && timesOverlap(a, b);
 
 const meetingsConflict = (meetsA: string, meetsB: string): boolean => {
-    const slotsB: Slot[] = parseMeeting(meetsB);
-    return parseMeeting(meetsA).some((a: Slot) => slotsB.some((b: Slot) => slotsConflict(a, b)));
+    const slotsB = parseMeeting(meetsB);
+    return parseMeeting(meetsA).some(a => slotsB.some(b => slotsConflict(a, b)));
 };
 
 const coursesConflict = (a: HasTermAndMeets, b: HasTermAndMeets): boolean =>
