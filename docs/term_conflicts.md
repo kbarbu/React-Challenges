@@ -1,0 +1,1 @@
+Make it impossible to select a course that has a time conflict with the courses already selected. Two courses conflict if they are in the same term, share at least one day, and their times overlap. Courses that can't be selected should look faded, and already selected courses should still be able to be unselected. A course with an empty meeting time never conflicts.

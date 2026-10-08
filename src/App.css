@@ -110,6 +110,22 @@ main h1 {
     0 16px 28px -14px rgba(60, 50, 90, 0.28);
 }
  
+.course-card.unselectable {
+  background: #f6f5f9;
+  border-color: #f0eef5;
+  box-shadow: none;
+  cursor: not-allowed;
+}
+
+.course-card.unselectable > * {
+  opacity: 0.45;
+}
+
+.course-card.unselectable:hover {
+  transform: none;
+  box-shadow: none;
+}
+
 .course-card::before {
   content: '';
   width: 44px;

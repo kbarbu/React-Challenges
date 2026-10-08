@@ -22,6 +22,7 @@ const calendarConfig = {
     cellDuration: 60,
     cellHeight: 57,
     durationBarVisible: false,
+    useEventBoxes: 'Never' as const,
     eventMoveHandling: 'Disabled' as const,
     eventResizeHandling: 'Disabled' as const,
     eventClickHandling: 'Enabled' as const,
