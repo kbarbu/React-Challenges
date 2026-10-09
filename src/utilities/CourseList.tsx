@@ -8,9 +8,10 @@ interface CourseListProps {
     selectedTerm: string;
     selectedCourses: string[];
     toggleSelected: (code: string) => void;
+    onEdit: (code: string) => void;
 }
 
-const CourseList = ({ courses, selectedTerm, selectedCourses, toggleSelected }: CourseListProps) => {
+const CourseList = ({ courses, selectedTerm, selectedCourses, toggleSelected, onEdit }: CourseListProps) => {
     const selectedCourseData = selectedCourses.map(code => courses[code]).filter(Boolean);
 
     return (
@@ -27,6 +28,7 @@ const CourseList = ({ courses, selectedTerm, selectedCourses, toggleSelected }: 
                             color={isSelected ? colorForIndex(index) : undefined}
                             disabled={!isSelected && hasConflict(course, selectedCourseData)}
                             onToggle={() => toggleSelected(code)}
+                            onEdit={() => onEdit(code)}
                         />
                     );
                 })}

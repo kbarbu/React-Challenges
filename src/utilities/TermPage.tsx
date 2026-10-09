@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import CourseForm from './CourseForm';
 import CourseList from './CourseList';
 import TermCalendar from './TermCalendar';
 import TermSelector from './TermSelector';
@@ -18,7 +19,10 @@ const TermPage = ({ schedule }: TermPageProps) => {
     const [selectedTerm, setSelectedTerm] = useState('Fall');
     const [selectedByTerm, setSelectedByTerm] = useState<Record<string, string[]>>({});
 
+    const [editingCode, setEditingCode] = useState<string | null>(null);
+
     const selectedCourses = selectedByTerm[selectedTerm] ?? NO_COURSES;
+    const editingCourse = editingCode === null ? undefined : schedule.courses[editingCode];
 
     const toggleSelected = (code: string) => {
         setSelectedByTerm(byTerm => ({
@@ -37,6 +41,7 @@ const TermPage = ({ schedule }: TermPageProps) => {
                     selectedTerm={selectedTerm}
                     selectedCourses={selectedCourses}
                     toggleSelected={toggleSelected}
+                    onEdit={setEditingCode}
                 />
                 <TermCalendar
                     courses={schedule.courses}
@@ -44,6 +49,9 @@ const TermPage = ({ schedule }: TermPageProps) => {
                     selectedCourses={selectedCourses}
                 />
             </div>
+            {editingCourse && (
+                <CourseForm course={editingCourse} onClose={() => setEditingCode(null)} />
+            )}
         </main>
     );
 };
