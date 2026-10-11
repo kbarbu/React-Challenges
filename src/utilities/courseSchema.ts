@@ -1,13 +1,13 @@
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 
-const MEETING_PATTERN = /^((?:M|Tu|W|Th|F)+)\s+(\d{1,2}):(\d{2})-(\d{1,2}):(\d{2})$/;
+const pattern = /^((?:M|Tu|W|Th|F)+)\s+(\d{1,2}):(\d{2})-(\d{1,2}):(\d{2})$/;
 
 const toMinutes = (hour: string, minute: string) => Number(hour) * 60 + Number(minute);
 
 export const isValidMeeting = (meets: string): boolean => {
     if (meets === '') return true;
-    const match = MEETING_PATTERN.exec(meets);
+    const match = pattern.exec(meets);
     if (!match) return false;
     const [, days, startHour, startMinute, endHour, endMinute] = match;
     const dayList = days.match(/Tu|Th|M|W|F/g) ?? [];
