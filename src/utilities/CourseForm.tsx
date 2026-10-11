@@ -1,33 +1,54 @@
-import { useState } from 'react';
-import type { FormEvent } from 'react';
+import { useForm } from 'react-hook-form';
+import type { SubmitHandler } from 'react-hook-form';
 import Modal from './Modal';
+import { courseResolver } from './courseSchema';
+import type { CourseFormData } from './courseSchema';
 import type { Course } from './types';
 
 interface CourseFormProps {
     course: Course;
     onClose: () => void;
+    onSave: (data: CourseFormData) => void;
 }
 
 const TITLE_ID = 'course-form-title';
 
-const CourseForm = ({ course, onClose }: CourseFormProps) => {
-    const [title, setTitle] = useState(course.title);
-    const [meets, setMeets] = useState(course.meets);
+const CourseForm = ({ course, onClose, onSave }: CourseFormProps) => {
+    const { register, handleSubmit, formState: { errors } } = useForm<CourseFormData>({
+        defaultValues: { title: course.title, meets: course.meets },
+        mode: 'onChange',
+        resolver: courseResolver,
+    });
 
-    const onSubmit = (e: FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
+    const onSubmit: SubmitHandler<CourseFormData> = data => {
+        onSave(data);
+        onClose();
     };
 
     return (
         <Modal labelledBy={TITLE_ID} onClose={onClose}>
-            <form className="course-form" onSubmit={onSubmit}>
+            <form className="course-form" onSubmit={handleSubmit(onSubmit)} noValidate>
                 <h2 id={TITLE_ID}>Edit CS {course.number}</h2>
-                <label htmlFor="course-title">Course name</label>
-                <input id="course-title" type="text" value={title} onChange={e => setTitle(e.target.value)} />
-                <label htmlFor="course-meets">Meeting times</label>
-                <input id="course-meets" type="text" value={meets} placeholder="MWF 12:00-13:00" onChange={e => setMeets(e.target.value)} />
+                <label htmlFor="course-title">
+                    Course name
+                    {errors.title && <span className="field-error" role="alert">{errors.title.message}</span>}
+                </label>
+                <input id="course-title"
+                    type="text"
+                    aria-invalid={errors.title ? true : undefined}
+                    {...register('title')} />
+                <label htmlFor="course-meets">
+                    Meeting times
+                    {errors.meets && <span className="field-error" role="alert">{errors.meets.message}</span>}
+                </label>
+                <input id="course-meets"
+                    type="text"
+                    placeholder="MWF 12:00-13:00"
+                    aria-invalid={errors.meets ? true : undefined}
+                    {...register('meets')} />
                 <div className="course-form-actions">
                     <button type="button" className="cancel-button" onClick={onClose}>Cancel</button>
+                    <button type="submit" className="save-button">Save</button>
                 </div>
             </form>
         </Modal>

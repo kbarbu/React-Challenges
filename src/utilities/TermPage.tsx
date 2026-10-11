@@ -3,7 +3,8 @@ import CourseForm from './CourseForm';
 import CourseList from './CourseList';
 import TermCalendar from './TermCalendar';
 import TermSelector from './TermSelector';
-import type { Schedule } from './types';
+import type { CourseFormData } from './courseSchema';
+import type { Courses, Schedule } from './types';
 
 const NO_COURSES: string[] = [];
 
@@ -19,10 +20,19 @@ const TermPage = ({ schedule }: TermPageProps) => {
     const [selectedTerm, setSelectedTerm] = useState('Fall');
     const [selectedByTerm, setSelectedByTerm] = useState<Record<string, string[]>>({});
 
+    const [courses, setCourses] = useState<Courses>(schedule.courses);
     const [editingCode, setEditingCode] = useState<string | null>(null);
 
     const selectedCourses = selectedByTerm[selectedTerm] ?? NO_COURSES;
-    const editingCourse = editingCode === null ? undefined : schedule.courses[editingCode];
+    const editingCourse = editingCode === null ? undefined : courses[editingCode];
+
+    const saveCourse = (data: CourseFormData) => {
+        if (editingCode === null) return;
+        setCourses(current => ({
+            ...current,
+            [editingCode]: { ...current[editingCode], ...data },
+        }));
+    };
 
     const toggleSelected = (code: string) => {
         setSelectedByTerm(byTerm => ({
@@ -37,20 +47,24 @@ const TermPage = ({ schedule }: TermPageProps) => {
             <TermSelector selected={selectedTerm} setSelected={setSelectedTerm} />
             <div className="schedule-layout">
                 <CourseList
-                    courses={schedule.courses}
+                    courses={courses}
                     selectedTerm={selectedTerm}
                     selectedCourses={selectedCourses}
                     toggleSelected={toggleSelected}
                     onEdit={setEditingCode}
                 />
                 <TermCalendar
-                    courses={schedule.courses}
+                    courses={courses}
                     selectedTerm={selectedTerm}
                     selectedCourses={selectedCourses}
                 />
             </div>
             {editingCourse && (
-                <CourseForm course={editingCourse} onClose={() => setEditingCode(null)} />
+                <CourseForm
+                    course={editingCourse}
+                    onClose={() => setEditingCode(null)}
+                    onSave={saveCourse}
+                />
             )}
         </main>
     );

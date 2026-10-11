@@ -1,0 +1,1 @@
+Add a Save button to the course edit form. Validate the course name and meeting times as the user types, show a clear error message above any input that is invalid, and only save when everything is valid. Saving should update the course on the page.

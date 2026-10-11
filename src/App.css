@@ -550,3 +550,37 @@ main h1 {
 .course-card.unselectable > .info-button:focus-visible {
   opacity: 0.45;
 }
+
+.course-form .field-error {
+  display: block;
+  margin-top: 2px;
+  color: var(--red-ink);
+  font-size: 0.8rem;
+  font-weight: 500;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+.course-form input[aria-invalid='true'] {
+  border-color: var(--red);
+  outline-color: var(--red);
+}
+
+.course-form-actions {
+  gap: 8px;
+}
+
+.save-button {
+  padding: 8px 18px;
+  border: 0;
+  border-radius: 999px;
+  background: var(--blue-ink);
+  color: #ffffff;
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.save-button:hover {
+  background: var(--navy);
+}
