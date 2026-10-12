@@ -1,0 +1,1 @@
+Change the course app so it gets its course data from a Firestore database instead of the current JSON web address. The page should look and work the same as before.

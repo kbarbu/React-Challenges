@@ -1,20 +1,15 @@
 import './App.css';
 import TermPage from './utilities/TermPage';
-import { useJsonQuery } from './utilities/fetch';
-import type { ScheduleData } from './utilities/types';
+import { useDocQuery } from './utilities/firestore';
+import type { Schedule } from './utilities/types';
 
-const DATA_URL = 'https://courses.cs.northwestern.edu/394/guides/data/cs-courses-firestore.php';
 const SCHEDULE_ID = 'CS-2018-2019';
 
 const App = () => {
-    const [json, isLoading, error] = useJsonQuery(DATA_URL);
+    const [schedule, isLoading, error] = useDocQuery<Schedule>('schedules', SCHEDULE_ID);
 
     if (error) return <h1>Error loading course data: {`${error}`}</h1>;
     if (isLoading) return <h1>Loading course data...</h1>;
-    if (!json) return <h1>No course data found</h1>;
-
-    const schedule = (json as ScheduleData).schedules[SCHEDULE_ID];
-
     if (!schedule) return <h1>Schedule {SCHEDULE_ID} not found</h1>;
 
     return <TermPage schedule={schedule} />;
