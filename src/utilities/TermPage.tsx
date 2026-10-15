@@ -3,8 +3,9 @@ import CourseForm from './CourseForm';
 import CourseList from './CourseList';
 import TermCalendar from './TermCalendar';
 import TermSelector from './TermSelector';
+import { updateCourse } from './firestore';
 import type { CourseFormData } from './courseSchema';
-import type { Courses, Schedule } from './types';
+import type { Schedule } from './types';
 
 const NO_COURSES: string[] = [];
 
@@ -13,25 +14,22 @@ const toggleList = <T,>(x: T, lst: T[]): T[] => (
 );
 
 interface TermPageProps {
+    scheduleId: string;
     schedule: Schedule;
 }
 
-const TermPage = ({ schedule }: TermPageProps) => {
+const TermPage = ({ scheduleId, schedule }: TermPageProps) => {
     const [selectedTerm, setSelectedTerm] = useState('Fall');
     const [selectedByTerm, setSelectedByTerm] = useState<Record<string, string[]>>({});
 
-    const [courses, setCourses] = useState<Courses>(schedule.courses);
     const [editingCode, setEditingCode] = useState<string | null>(null);
 
     const selectedCourses = selectedByTerm[selectedTerm] ?? NO_COURSES;
-    const editingCourse = editingCode === null ? undefined : courses[editingCode];
+    const editingCourse = editingCode === null ? undefined : schedule.courses[editingCode];
 
-    const saveCourse = (data: CourseFormData) => {
+    const saveCourse = async (data: CourseFormData) => {
         if (editingCode === null) return;
-        setCourses(current => ({
-            ...current,
-            [editingCode]: { ...current[editingCode], ...data },
-        }));
+        await updateCourse(scheduleId, editingCode, data);
     };
 
     const toggleSelected = (code: string) => {
@@ -47,14 +45,14 @@ const TermPage = ({ schedule }: TermPageProps) => {
             <TermSelector selected={selectedTerm} setSelected={setSelectedTerm} />
             <div className="schedule-layout">
                 <CourseList
-                    courses={courses}
+                    courses={schedule.courses}
                     selectedTerm={selectedTerm}
                     selectedCourses={selectedCourses}
                     toggleSelected={toggleSelected}
                     onEdit={setEditingCode}
                 />
                 <TermCalendar
-                    courses={courses}
+                    courses={schedule.courses}
                     selectedTerm={selectedTerm}
                     selectedCourses={selectedCourses}
                 />

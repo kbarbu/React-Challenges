@@ -8,21 +8,25 @@ import type { Course } from './types';
 interface CourseFormProps {
     course: Course;
     onClose: () => void;
-    onSave: (data: CourseFormData) => void;
+    onSave: (data: CourseFormData) => Promise<void>;
 }
 
 const TITLE_ID = 'course-form-title';
 
 const CourseForm = ({ course, onClose, onSave }: CourseFormProps) => {
-    const { register, handleSubmit, formState: { errors } } = useForm<CourseFormData>({
+    const { register, handleSubmit, setError, formState: { errors, isSubmitting } } = useForm<CourseFormData>({
         defaultValues: { title: course.title, meets: course.meets },
         mode: 'onChange',
         resolver: courseResolver,
     });
 
-    const onSubmit: SubmitHandler<CourseFormData> = data => {
-        onSave(data);
-        onClose();
+    const onSubmit: SubmitHandler<CourseFormData> = async data => {
+        try {
+            await onSave(data);
+            onClose();
+        } catch (err) {
+            setError('root', { message: `Could not save: ${(err as Error).message}` });
+        }
     };
 
     return (
@@ -46,9 +50,12 @@ const CourseForm = ({ course, onClose, onSave }: CourseFormProps) => {
                     placeholder="MWF 12:00-13:00"
                     aria-invalid={errors.meets ? true : undefined}
                     {...register('meets')} />
+                {errors.root && <span className="field-error" role="alert">{errors.root.message}</span>}
                 <div className="course-form-actions">
                     <button type="button" className="cancel-button" onClick={onClose}>Cancel</button>
-                    <button type="submit" className="save-button">Save</button>
+                    <button type="submit" className="save-button" disabled={isSubmitting}>
+                        {isSubmitting ? 'Saving...' : 'Save'}
+                    </button>
                 </div>
             </form>
         </Modal>
