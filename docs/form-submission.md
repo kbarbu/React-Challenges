@@ -1,0 +1,1 @@
+On the course form submit, edit the course’s data in the firestore database.
