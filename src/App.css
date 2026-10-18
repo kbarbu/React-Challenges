@@ -584,3 +584,41 @@ main h1 {
 .save-button:hover {
   background: var(--navy);
 }
+.banner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 12px 16px 0;
+  font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+}
+
+.banner-greeting {
+  color: var(--blue-ink);
+  font-size: 1.1rem;
+  font-weight: 650;
+}
+
+.banner-actions {
+  margin-left: auto;
+}
+
+.auth-button {
+  padding: 8px 18px;
+  border: 0;
+  border-radius: 999px;
+  background: var(--blue-ink);
+  color: #ffffff;
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.auth-button:hover {
+  background: var(--navy);
+}
+
+.auth-button:focus-visible {
+  outline: 2px solid var(--blue-ink);
+  outline-offset: 2px;
+}

@@ -4,6 +4,7 @@ import CourseList from './CourseList';
 import TermCalendar from './TermCalendar';
 import TermSelector from './TermSelector';
 import { updateCourse } from './firestore';
+import { useAuthState } from './firebase';
 import type { CourseFormData } from './courseSchema';
 import type { Schedule } from './types';
 
@@ -19,6 +20,7 @@ interface TermPageProps {
 }
 
 const TermPage = ({ scheduleId, schedule }: TermPageProps) => {
+    const { isAuthenticated } = useAuthState();
     const [selectedTerm, setSelectedTerm] = useState('Fall');
     const [selectedByTerm, setSelectedByTerm] = useState<Record<string, string[]>>({});
 
@@ -49,7 +51,7 @@ const TermPage = ({ scheduleId, schedule }: TermPageProps) => {
                     selectedTerm={selectedTerm}
                     selectedCourses={selectedCourses}
                     toggleSelected={toggleSelected}
-                    onEdit={setEditingCode}
+                    onEdit={isAuthenticated ? setEditingCode : undefined}
                 />
                 <TermCalendar
                     courses={schedule.courses}
@@ -57,7 +59,7 @@ const TermPage = ({ scheduleId, schedule }: TermPageProps) => {
                     selectedCourses={selectedCourses}
                 />
             </div>
-            {editingCourse && (
+            {isAuthenticated && editingCourse && (
                 <CourseForm
                     course={editingCourse}
                     onClose={() => setEditingCode(null)}

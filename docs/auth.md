@@ -1,0 +1,1 @@
+Add Google sign in. Put a Sign In and Sign Out button in the top right of a banner that shows on every screen. Only signed in users should see the edit button, and only signed in users should be able to write to the database.

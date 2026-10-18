@@ -1,11 +1,12 @@
 import './App.css';
+import Banner from './utilities/Banner';
 import TermPage from './utilities/TermPage';
 import { useDocQuery } from './utilities/firestore';
 import type { Schedule } from './utilities/types';
 
 const SCHEDULE_ID = 'CS-2018-2019';
 
-const App = () => {
+const ScheduleView = () => {
     const [schedule, isLoading, error] = useDocQuery<Schedule>('schedules', SCHEDULE_ID);
 
     if (error) return <h1>Error loading course data: {`${error}`}</h1>;
@@ -14,5 +15,12 @@ const App = () => {
 
     return <TermPage scheduleId={SCHEDULE_ID} schedule={schedule} />;
 };
+
+const App = () => (
+    <>
+        <Banner />
+        <ScheduleView />
+    </>
+);
 
 export default App;

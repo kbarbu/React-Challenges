@@ -8,7 +8,7 @@ interface CourseListProps {
     selectedTerm: string;
     selectedCourses: string[];
     toggleSelected: (code: string) => void;
-    onEdit: (code: string) => void;
+    onEdit?: (code: string) => void;
 }
 
 const CourseList = ({ courses, selectedTerm, selectedCourses, toggleSelected, onEdit }: CourseListProps) => {
@@ -28,7 +28,7 @@ const CourseList = ({ courses, selectedTerm, selectedCourses, toggleSelected, on
                             color={isSelected ? colorForIndex(index) : undefined}
                             disabled={!isSelected && hasConflict(course, selectedCourseData)}
                             onToggle={() => toggleSelected(code)}
-                            onEdit={() => onEdit(code)}
+                            onEdit={onEdit && (() => onEdit(code))}
                         />
                     );
                 })}

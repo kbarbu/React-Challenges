@@ -6,7 +6,7 @@ interface CourseCardProps {
     color?: string;
     disabled?: boolean;
     onToggle: () => void;
-    onEdit: () => void;
+    onEdit?: () => void;
 }
 
 const CourseCard = ({ course, color, disabled = false, onToggle, onEdit }: CourseCardProps) => {
@@ -33,16 +33,18 @@ const CourseCard = ({ course, color, disabled = false, onToggle, onEdit }: Cours
             aria-disabled={disabled}
             onClick={handleClick}
             onKeyDown={handleKeyDown}>
-            <button type="button"
-                className="info-button"
-                aria-label={`Edit CS ${course.number}`}
-                onClick={e => {
-                    e.stopPropagation();
-                    onEdit();
-                }}
-                onKeyDown={e => e.stopPropagation()}>
-                ⓘ
-            </button>
+            {onEdit && (
+                <button type="button"
+                    className="info-button"
+                    aria-label={`Edit CS ${course.number}`}
+                    onClick={e => {
+                        e.stopPropagation();
+                        onEdit();
+                    }}
+                    onKeyDown={e => e.stopPropagation()}>
+                    ⓘ
+                </button>
+            )}
             <h2>{course.term} CS {course.number}</h2>
             <p>{course.title}</p>
             <div className="meets">{course.meets}</div>

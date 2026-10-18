@@ -1,5 +1,8 @@
+import { useEffect, useState } from 'react';
+import { flushSync } from 'react-dom';
 import { initializeApp } from 'firebase/app';
 import { getFirestore } from 'firebase/firestore';
+import { getAuth, GoogleAuthProvider, onAuthStateChanged, signInWithPopup, signOut, type NextOrObserver, type User } from 'firebase/auth';
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -18,3 +21,37 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 export const db = getFirestore(app);
+const auth = getAuth(app);
+
+export const signInWithGoogle = () => {
+  signInWithPopup(auth, new GoogleAuthProvider());
+};
+
+const firebaseSignOut = () => signOut(auth);
+
+export { firebaseSignOut as signOut };
+
+export interface AuthState {
+  user: User | null,
+  isAuthenticated: boolean,
+  isInitialLoading: boolean
+}
+
+export const addAuthStateListener = (fn: NextOrObserver<User>) => (
+  onAuthStateChanged(auth, fn)
+);
+
+export const useAuthState = (): AuthState => {
+  const [user, setUser] = useState(auth.currentUser);
+  const [isInitialLoading, setIsInitialLoading] = useState(true);
+  const isAuthenticated = !!user;
+
+  useEffect(() => addAuthStateListener((user) => {
+    flushSync(() => {
+      setUser(user);
+      setIsInitialLoading(false);
+    });
+  }), []);
+
+  return { user, isAuthenticated, isInitialLoading };
+};
