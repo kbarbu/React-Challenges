@@ -1,0 +1,1 @@
+Change the app so only signed in users who are administrators can edit class information. Admins should be stored in the database by user ID. The edit button on each course card should only show for admins, and the database rules should only allow writes from admins.
