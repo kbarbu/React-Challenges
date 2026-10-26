@@ -8,12 +8,16 @@ interface TermSelectorProps {
 }
 
 const TermSelector = ({ selected, setSelected }: TermSelectorProps) => (
-    <div>
+    <div className="term-selector" role="group" aria-label="Term">
         {terms.map(term => (
-            <label key={term}>
-                <input type="radio" name="term" value={term} checked={term === selected} onChange={() => setSelected(term)}/>
+            <button key={term}
+                type="button"
+                className="term-option"
+                data-term={term.toLowerCase()}
+                aria-pressed={term === selected}
+                onClick={() => setSelected(term)}>
                 {term}
-            </label>
+            </button>
         ))}
     </div>
 );

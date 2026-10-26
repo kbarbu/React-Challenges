@@ -163,24 +163,19 @@ main h1 {
 }
  
 .term-selector {
-  display: inline-flex;
-  gap: 4px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
   margin: 0 0 24px;
-  padding: 4px;
-  background: #ffffff;
-  border: 1px solid #ebe8f2;
-  border-radius: 999px;
-  box-shadow: 0 1px 2px rgba(60, 50, 90, 0.06);
 }
 
 .term-option {
   padding: 8px 18px;
   border: 0;
-  border-radius: 999px;
-  background: transparent;
-  color: var(--muted);
+  border-radius: 3px;
+  background: color-mix(in srgb, var(--accent) 16%, white);
+  color: var(--accent-ink);
   font: inherit;
-  font-size: 0.95rem;
   font-weight: 600;
   cursor: pointer;
   transition: background 0.2s ease, color 0.2s ease;
@@ -202,12 +197,16 @@ main h1 {
 }
 
 .term-option:hover {
-  background: color-mix(in srgb, var(--accent) 10%, white);
+  background: color-mix(in srgb, var(--accent) 28%, white);
 }
 
-.term-option[aria-checked='true'] {
-  background: color-mix(in srgb, var(--accent) 22%, white);
-  color: var(--accent-ink);
+.term-option[aria-pressed='true'] {
+  background: var(--accent-ink);
+  color: #ffffff;
+}
+
+.term-option[aria-pressed='true']:hover {
+  background: color-mix(in srgb, var(--accent-ink) 75%, black);
 }
 
 .term-option:focus-visible {
