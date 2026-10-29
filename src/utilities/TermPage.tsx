@@ -34,6 +34,10 @@ const TermPage = ({ scheduleId, schedule }: TermPageProps) => {
         await updateCourse(scheduleId, editingCode, data);
     };
 
+    const clearTerm = () => {
+    setSelectedByTerm(byTerm => ({ ...byTerm, [selectedTerm]: NO_COURSES }));
+    };
+
     const toggleSelected = (code: string) => {
         setSelectedByTerm(byTerm => ({
             ...byTerm,
@@ -45,6 +49,12 @@ const TermPage = ({ scheduleId, schedule }: TermPageProps) => {
         <main>
             <h1>{schedule.title}</h1>
             <TermSelector selected={selectedTerm} setSelected={setSelectedTerm} />
+            <button type="button"
+                className="cancel-button"
+                onClick={clearTerm}
+                disabled={selectedCourses.length === 0}>
+                Clear all
+            </button>
             <div className="schedule-layout">
                 <CourseList
                     courses={schedule.courses}

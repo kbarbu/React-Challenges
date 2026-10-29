@@ -1,0 +1,1 @@
+Add another filter option for Summer and Add a Clear all button that removes all selected courses

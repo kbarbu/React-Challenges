@@ -195,6 +195,10 @@ main h1 {
   --accent: var(--green);
   --accent-ink: var(--green-ink);
 }
+.term-option[data-term='summer'] {
+  --accent: var(--yellow);
+  --accent-ink: var(--yellow-ink);
+}
 
 .term-option:hover {
   background: color-mix(in srgb, var(--accent) 28%, white);
@@ -528,13 +532,22 @@ main h1 {
 
 .cancel-button {
   padding: 8px 18px;
-  border: 1px solid #ebe8f2;
-  border-radius: 999px;
+  border: 3px solid var(--red-ink);
+  border-radius: 3px;
   background: #ffffff;
   color: var(--ink);
   font: inherit;
   font-weight: 600;
   cursor: pointer;
+}
+
+.cancel-button:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.cancel-button:disabled:hover {
+  background: #ffffff;
 }
 
 .cancel-button:hover {

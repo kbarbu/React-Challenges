@@ -1,6 +1,6 @@
 import type { Dispatch, SetStateAction } from 'react';
 
-const terms = ['Fall', 'Winter', 'Spring'];
+const terms = ['Fall', 'Winter', 'Spring', 'Summer'];
 
 interface TermSelectorProps {
     selected: string;
