@@ -29,6 +29,8 @@ const TermPage = ({ scheduleId, schedule }: TermPageProps) => {
     const selectedCourses = selectedByTerm[selectedTerm] ?? NO_COURSES;
     const editingCourse = editingCode === null ? undefined : schedule.courses[editingCode];
 
+    const [query, setQuery] = useState('');
+
     const saveCourse = async (data: CourseFormData) => {
         if (editingCode === null) return;
         await updateCourse(scheduleId, editingCode, data);
@@ -44,22 +46,32 @@ const TermPage = ({ scheduleId, schedule }: TermPageProps) => {
             [selectedTerm]: toggleList(code, byTerm[selectedTerm] ?? NO_COURSES),
         }));
     };
+    
 
     return (
         <main>
             <h1>{schedule.title}</h1>
-            <TermSelector selected={selectedTerm} setSelected={setSelectedTerm} />
-            <button type="button"
-                className="cancel-button"
-                onClick={clearTerm}
-                disabled={selectedCourses.length === 0}>
-                Clear all
-            </button>
+            <div className="term-toolbar">
+                <TermSelector selected={selectedTerm} setSelected={setSelectedTerm} />
+                <button type="button"
+                    className="cancel-button"
+                    onClick={clearTerm}
+                    disabled={selectedCourses.length === 0}>
+                    Clear all
+                </button>
+                <input type="search"
+                    className="course-search"
+                    placeholder="Search courses"
+                    aria-label="Search courses"
+                    value={query}
+                    onChange={e => setQuery(e.target.value)} />
+            </div>
             <div className="schedule-layout">
                 <CourseList
                     courses={schedule.courses}
                     selectedTerm={selectedTerm}
                     selectedCourses={selectedCourses}
+                    query={query}
                     toggleSelected={toggleSelected}
                     onEdit={isAdmin ? setEditingCode : undefined}
                 />

@@ -634,3 +634,10 @@ main h1 {
   outline: 2px solid var(--blue-ink);
   outline-offset: 2px;
 }
+
+.course-search {
+  padding: 8px 12px;
+  border: 1px solid #ebe8f2;
+  border-radius: 999px;
+  font: inherit;
+}
